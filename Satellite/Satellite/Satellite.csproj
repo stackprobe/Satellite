@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{79AD757C-9F96-43AE-B363-1B3A4C2D9EB6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Charlotte</RootNamespace>
+    <AssemblyName>Satellite</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Flowertact\Fortewave.cs" />
+    <Compile Include="Flowertact\Tools\PostOfficeBox.cs" />
+    <Compile Include="Htt\HttRequest.cs" />
+    <Compile Include="Htt\HttResponse.cs" />
+    <Compile Include="Htt\HttServer.cs" />
+    <Compile Include="Htt\HttService.cs" />
+    <Compile Include="Htt\Response\HttRes301.cs" />
+    <Compile Include="Htt\Response\HttRes404.cs" />
+    <Compile Include="Htt\Response\HttResFile.cs" />
+    <Compile Include="Htt\Response\HttResFileImage.cs" />
+    <Compile Include="Htt\Response\HttResHtml.cs" />
+    <Compile Include="Htt\Response\HttResText.cs" />
+    <Compile Include="Satellite\ObjectList.cs" />
+    <Compile Include="Satellite\ObjectMap.cs" />
+    <Compile Include="Satellite\Satellizer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Satellite\Tools\Connection.cs" />
+    <Compile Include="Satellite\Tools\CrossDictionary.cs" />
+    <Compile Include="Satellite\Tools\CrossDictionaryTools.cs" />
+    <Compile Include="Satellite\Tools\Deserializer.cs" />
+    <Compile Include="Satellite\Tools\DictionaryTools.cs" />
+    <Compile Include="Satellite\Tools\ExtToContentType.cs" />
+    <Compile Include="Satellite\Tools\FileTools.cs" />
+    <Compile Include="Satellite\Tools\IntTools.cs" />
+    <Compile Include="Satellite\Tools\MutexObject.cs" />
+    <Compile Include="Satellite\Tools\NamedEventObject.cs" />
+    <Compile Include="Satellite\Tools\QueueData.cs" />
+    <Compile Include="Satellite\Tools\SecurityTools.cs" />
+    <Compile Include="Satellite\Tools\Serializer.cs" />
+    <Compile Include="Satellite\Tools\StringTools.cs" />
+    <Compile Include="Satellite\Tools\SubBlock.cs" />
+    <Compile Include="Satellite\Tools\SystemTools.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

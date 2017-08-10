@@ -1,0 +1,191 @@
+Satellite for C#
+================
+
+プロセス間通信モジュールです。
+このモジュールを実装した他のプロセスと通信できます。
+通信相手は Java 版でもok
+
+
+通信の形態
+----------
+
+	クライアント・サーバー方式
+
+		「クライアントとサーバー」「クライアント同士」の接続は可能
+		「サーバー同士」の接続は不可
+
+	ソケットっぽい
+
+		接続 -> 通信 -> 切断
+		クライアント・サーバー共に、同一プロセス内で複数のコネクションを同時に作成可能
+		サーバーは、同一プロセス内で複数のリスナ（サーバーオブジェクト）を同時に作成可能
+
+	通信データはバイトストリームではなく以下のオブジェクト
+
+		SERIALIZABLE_OBJECT:
+			byte[]
+			Charlotte.Satellite.ObjectList # 値は SERIALIZABLE_CHILD_OBJECT のいずれか
+			Charlotte.Satellite.ObjectMap  # 値は SERIALIZABLE_CHILD_OBJECT のいずれか, キーは null 不可
+			string
+
+		SERIALIZABLE_CHILD_OBJECT:
+			SERIALIZABLE_OBJECT
+			null
+
+
+動作環境
+--------
+
+	Windows 7
+	確認していませんが Windows 8/8.1/10 でも動くかもしれません。
+
+	C#
+
+
+必要な名前空間
+--------------
+
+	Charlotte.Satellite
+	Charlotte.Satellite.Tools
+
+
+組み込み方法
+------------
+
+	1. 「必要な名前空間」をソース（プロジェクト）に組み込む
+
+
+使用するクラス
+--------------
+
+	Charlotte.Satellite.ObjectList
+
+		System.Collections.Generic.List<object> をラップしたクラス
+
+	Charlotte.Satellite.ObjectMap
+
+		System.Collections.Generic.Dictionary<string, object> をラップしたクラス
+
+	Charlotte.Satellite.Satellizer
+
+		このモジュールの外部インターフェイス
+
+
+	★ Charlotte.Satellite.Tools 名前空間内のクラスは使用しないで下さい。
+
+
+クライアント用・インターフェイス
+--------------------------------
+
+	public Satellizer(string group, string ident);
+
+		コンストラクタです。
+		★このコンストラクタはスレッドセーフです。
+
+		group ... グループ名
+		ident ... 識別名
+
+		生成した Satellizer を破棄する前に Close または Dispose して下さい。
+		Close, Dispose せずにプロセスを終了すると、
+		接続中であれば、相手側の切断まで時間が掛かることがあります。
+
+	public bool Connect(int millis);
+
+		接続を試みます。
+		★このメソッドはスレッドセーフです。
+
+		millis ... 接続をトライし続ける時間（ミリ秒）
+		戻り値 ... 接続に成功すれば true, そうでなければ false
+
+		millis は最長時間です。0タイムで処理が返る場合があります。
+		タイムアウトを設ける場合は、別途時間を計って下さい。
+
+	public void Send(object sendObj);
+
+		データを送信します。
+		★このメソッドはスレッドセーフです。
+
+		sendObj ... 送信データ
+
+		送信データは SERIALIZABLE_OBJECT でなればなりません。
+		この送信は必ず成功します。（相手側が切断した後でも）
+		このメソッドが終了した時点で、相手側が受信しているかどうかは分かりません。
+
+	public object Recv(int millis);
+
+		データを受信します。
+		★このメソッドはスレッドセーフです。
+
+		millis ... 受信をトライし続ける時間（ミリ秒）
+		戻り値 ... 受信に成功すれば「受信データ」、そうでなければ null
+
+		受信データは SERIALIZABLE_OBJECT の何れかです。
+		受信データが null であった場合、受信失敗と区別付きません。
+
+	public bool IsOtherSideDisconnected()
+
+		相手側が切断したかどうか確認します。
+		★このメソッドはスレッドセーフです。
+
+		戻り値 ... 相手側が切断していれば true, そうでなければ false
+
+	public void Disconnect();
+
+		切断します。
+		★このメソッドはスレッドセーフです。
+
+	public void Close();
+
+		このオブジェクトを破棄します。
+		★このメソッドはスレッドセーフです。
+
+	public void Dispose();
+
+		このオブジェクトを破棄します。
+		★このメソッドはスレッドセーフです。
+
+
+サーバー用・インターフェイス
+----------------------------
+
+	public static void Listen(string group, string ident, int millis, Server server);
+
+		リスナ（サーバーとして受信待ち）を開始します。
+		★このメソッドはスレッドセーフです。
+
+		group  ... グループ名
+		ident  ... 識別名
+		millis ... 1回の接続を試みる時間＝サーバー停止を確認する周期（ミリ秒）
+		server ... サーバーオブジェクト
+
+		サーバーオブジェクトがサーバー停止を返すまでブロックされます。
+
+	public interface Server
+
+		bool Interlude();
+
+			定期的に呼び出されるメソッド
+			このメソッドは複数同時に呼び出されることは無い。
+			このメソッドは ServiceTh 実行中に呼び出されることがある。
+
+			戻り値 ... サーバーの実行を継続する場合 true, 停止する場合 false
+
+		void ServiceTh(Satellizer stllzr);
+
+			クライアントと接続される度に呼び出される。
+			このメソッドは複数同時に呼び出されることがある。
+
+			stllzr ... 接続中のオブジェクト
+
+
+紐付け
+------
+
+	「同じグループ名で、識別名が異なる」もの同士を接続します。
+
+
+蛇足
+----
+
+	Satellizer = Satellite + Serializer
+

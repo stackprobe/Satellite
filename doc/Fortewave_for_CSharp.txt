@@ -1,0 +1,76 @@
+Fortewave for C#
+================
+
+プロセス間通信モジュールです。
+このモジュールを実装した他のプロセスと通信できます。
+通信相手は Java 版でもok
+
+
+通信の形態
+----------
+
+	メッセージ・キュー方式
+
+		接続・切断は無い。
+
+	通信データはバイトストリームではなく以下のオブジェクト
+
+		SERIALIZABLE_OBJECT:
+			byte[]
+			Charlotte.Satellite.ObjectList # 値は SERIALIZABLE_CHILD_OBJECT のいずれか
+			Charlotte.Satellite.ObjectMap  # 値は SERIALIZABLE_CHILD_OBJECT のいずれか, キーは null 不可
+			string
+
+		SERIALIZABLE_CHILD_OBJECT:
+			SERIALIZABLE_OBJECT
+			null
+
+
+動作環境
+--------
+
+	Windows 7
+	確認していませんが Windows 8/8.1/10 でも動くかもしれません。
+
+	C#
+
+
+必要な名前空間
+--------------
+
+	Charlotte.Flowertact
+	Charlotte.Flowertact.Tools
+	Charlotte.Satellite
+	Charlotte.Satellite.Tools
+
+
+組み込み方法
+------------
+
+	1. 「必要な名前空間」をソース（プロジェクト）に組み込む
+
+
+使用するクラス
+--------------
+
+	Charlotte.Satellite.ObjectList
+
+		System.Collections.Generic.List<object> をラップしたクラス
+
+	Charlotte.Satellite.ObjectMap
+
+		System.Collections.Generic.Dictionary<string, object> をラップしたクラス
+
+	Charlotte.Flowertact.Fortewave
+
+		このモジュールの外部インターフェイス
+
+
+	★ Charlotte.Flowertact.Tools, Charlotte.Satellite.Tools 名前空間内のクラスは使用しないで下さい。
+
+
+インターフェイス
+----------------
+
+	TODO
+
