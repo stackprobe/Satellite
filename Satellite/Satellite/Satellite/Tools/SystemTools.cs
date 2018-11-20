@@ -41,6 +41,7 @@ namespace Charlotte.Satellite.Tools
 			return false;
 		}
 
+#if false // old
 		// ---- MoveFileEx ----
 
 		[Flags]
@@ -63,5 +64,6 @@ namespace Charlotte.Satellite.Tools
 			);
 
 		// ----
+#endif
 	}
 }

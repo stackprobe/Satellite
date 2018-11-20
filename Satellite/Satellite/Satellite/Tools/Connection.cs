@@ -25,7 +25,8 @@ namespace Charlotte.Satellite.Tools
 		private string OtherIdentDir;
 		private string OtherSessionDir;
 		private NamedEventObject OtherEv;
-		private string FirstTimeFile;
+		//private string FirstTimeFile;
+		private string BootTimeFile;
 		private MutexObject ProcAliveMtx;
 		private MutexObject OtherProcAliveMtx;
 
@@ -40,7 +41,8 @@ namespace Charlotte.Satellite.Tools
 			this.SessionDir = Path.Combine(this.IdentDir, this.Session);
 			this.Mtx = new MutexObject(COMMON_ID);
 			this.Ev = new NamedEventObject(this.Session);
-			this.FirstTimeFile = this.CommonDir + "_1";
+			//this.FirstTimeFile = this.CommonDir + "_1";
+			this.BootTimeFile = this.CommonDir + "_BT";
 			this.ProcAliveMtx = new MutexObject(this.Session + "_PA");
 			this.ProcAliveMtx.WaitOne();
 		}
@@ -53,6 +55,11 @@ namespace Charlotte.Satellite.Tools
 
 			using (this.Mtx.Section())
 			{
+#if true
+				// TODO
+				// TODO
+				// TODO
+#else // old
 				if (FileTools.ExistFile(this.FirstTimeFile) == false)
 				{
 					if (FileTools.ExistDir(this.CommonDir))
@@ -61,6 +68,7 @@ namespace Charlotte.Satellite.Tools
 					FileTools.CreateFile(this.FirstTimeFile);
 					SystemTools.MoveFileEx(this.FirstTimeFile, null, SystemTools.MoveFileFlags.DelayUntilReboot);
 				}
+#endif
 				FileTools.CreateDir(this.CommonDir);
 				FileTools.CreateDir(this.GroupDir);
 				FileTools.CreateDir(this.IdentDir);
