@@ -26,9 +26,11 @@ namespace Charlotte.Satellite.Tools
 		private string OtherSessionDir;
 		private NamedEventObject OtherEv;
 		//private string FirstTimeFile;
-		private string BootTimeFile;
 		private MutexObject ProcAliveMtx;
 		private MutexObject OtherProcAliveMtx;
+
+		private static MutexHandleMonitor MHM = new MutexHandleMonitor(COMMON_ID + "_MHM");
+		private bool MHM_Entered = false;
 
 		public Connection(string group, string ident)
 		{
@@ -42,7 +44,6 @@ namespace Charlotte.Satellite.Tools
 			this.Mtx = new MutexObject(COMMON_ID);
 			this.Ev = new NamedEventObject(this.Session);
 			//this.FirstTimeFile = this.CommonDir + "_1";
-			this.BootTimeFile = this.CommonDir + "_BT";
 			this.ProcAliveMtx = new MutexObject(this.Session + "_PA");
 			this.ProcAliveMtx.WaitOne();
 		}
@@ -56,9 +57,19 @@ namespace Charlotte.Satellite.Tools
 			using (this.Mtx.Section())
 			{
 #if true
-				// TODO
-				// TODO
-				// TODO
+				lock (MHM.SYNCROOT)
+				{
+					MHM.Enter();
+					MHM_Entered = true;
+
+					int ohc = MHM.GetOtherHandleCount();
+
+					File.AppendAllLines(@"C:\temp\1.txt", new string[] { "" + ohc }, Encoding.ASCII); // test test test
+
+					if (ohc == 0)
+						if (FileTools.ExistDir(this.CommonDir))
+							FileTools.DeleteDir(this.CommonDir, true);
+				}
 #else // old
 				if (FileTools.ExistFile(this.FirstTimeFile) == false)
 				{
@@ -103,6 +114,15 @@ namespace Charlotte.Satellite.Tools
 				FileTools.DeleteDir(this.IdentDir);
 				FileTools.DeleteDir(this.GroupDir);
 				FileTools.DeleteDir(this.CommonDir);
+
+				lock (MHM.SYNCROOT)
+				{
+					if (MHM_Entered)
+					{
+						MHM.Leave();
+						MHM_Entered = false;
+					}
+				}
 			}
 			return false;
 		}
@@ -346,6 +366,15 @@ namespace Charlotte.Satellite.Tools
 				FileTools.DeleteDir(this.IdentDir);
 				FileTools.DeleteDir(this.GroupDir);
 				FileTools.DeleteDir(this.CommonDir);
+
+				lock (MHM.SYNCROOT)
+				{
+					if (MHM_Entered)
+					{
+						MHM.Leave();
+						MHM_Entered = false;
+					}
+				}
 			}
 			this.OtherEv.Set();
 			this.OtherEv.Close();

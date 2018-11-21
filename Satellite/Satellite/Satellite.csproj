@@ -66,6 +66,7 @@
     <Compile Include="Satellite\Tools\ExtToContentType.cs" />
     <Compile Include="Satellite\Tools\FileTools.cs" />
     <Compile Include="Satellite\Tools\IntTools.cs" />
+    <Compile Include="Satellite\Tools\MutexHandleMonitor.cs" />
     <Compile Include="Satellite\Tools\MutexObject.cs" />
     <Compile Include="Satellite\Tools\NamedEventObject.cs" />
     <Compile Include="Satellite\Tools\QueueData.cs" />

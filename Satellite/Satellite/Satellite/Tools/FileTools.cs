@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading;
 
 namespace Charlotte.Satellite.Tools
 {
@@ -13,9 +14,31 @@ namespace Charlotte.Satellite.Tools
 			File.WriteAllBytes(file, new byte[0]);
 		}
 
+		public static void CreateDir_Ex(string dir)
+		{
+			for (int c = 0; c < 50; c++)
+			{
+				try
+				{
+					Directory.CreateDirectory(dir);
+
+					if (Directory.Exists(dir))
+						return;
+				}
+				catch
+				{ }
+
+				Thread.Sleep(c);
+			}
+			Directory.CreateDirectory(dir);
+
+			if (Directory.Exists(dir) == false)
+				throw new Exception("ディレクトリを作成出来ません。" + dir);
+		}
+
 		public static void CreateDir(string dir)
 		{
-			Directory.CreateDirectory(dir);
+			CreateDir_Ex(dir);
 		}
 
 		public static bool ExistFile(string file)
@@ -28,19 +51,69 @@ namespace Charlotte.Satellite.Tools
 			return Directory.Exists(dir);
 		}
 
+		private static void DeleteFile_Ex(string file)
+		{
+			if (File.Exists(file))
+			{
+				for (int c = 0; c < 50; c++)
+				{
+					try
+					{
+						File.Delete(file);
+
+						if (File.Exists(file) == false)
+							return;
+					}
+					catch
+					{ }
+
+					Thread.Sleep(c);
+				}
+				File.Delete(file);
+
+				if (File.Exists(file))
+					throw new Exception("ファイルを削除出来ません。" + file);
+			}
+		}
+
 		public static void DeleteFile(string file)
 		{
-			File.Delete(file);
+			DeleteFile_Ex(file);
 		}
 
 		public static void DelFile(string file)
 		{
 			try
 			{
-				File.Delete(file);
+				DeleteFile(file);
 			}
 			catch
 			{ }
+		}
+
+		private static void DeleteDir_Ex(string dir)
+		{
+			if (Directory.Exists(dir))
+			{
+				for (int c = 0; c < 50; c++)
+				{
+					try
+					{
+						Directory.Delete(dir, true);
+
+						if (Directory.Exists(dir) == false)
+							return;
+					}
+					catch
+					{ }
+
+					Thread.Sleep(c);
+				}
+				Directory.Delete(dir, true);
+
+				if (Directory.Exists(dir))
+					throw new Exception("ディレクトリを削除出来ません。" + dir);
+			}
 		}
 
 		public static void DeleteDir(string dir, bool recursive = false)
@@ -51,7 +124,7 @@ namespace Charlotte.Satellite.Tools
 			if (recursive == false && 1 <= Directory.GetFileSystemEntries(dir).Length)
 				return; // この動作を意図している呼び出し元もあるよ！
 
-			Directory.Delete(dir, recursive);
+			DeleteDir_Ex(dir);
 		}
 
 		/// <summary>

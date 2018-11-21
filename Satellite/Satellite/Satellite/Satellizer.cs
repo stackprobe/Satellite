@@ -58,7 +58,7 @@ namespace Charlotte.Satellite
 						if (stllzr.Connected)
 						{
 							Satellizer f_stllzr = stllzr;
-							stllzr = new Satellizer(group, ident);
+							stllzr = null;
 
 							new Thread((ThreadStart)delegate
 							{
