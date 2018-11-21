@@ -129,6 +129,7 @@ namespace SatelliteTests
 
 			public bool Interlude()
 			{
+				Console.WriteLine("*1");
 				lock (SYNCROOT)
 				{
 					return _c < 20 * 50;
@@ -139,6 +140,7 @@ namespace SatelliteTests
 			{
 				for (; ; )
 				{
+					Console.WriteLine("*2");
 					string retData = (string)stllzr.Recv(2000);
 
 					if (retData != null)
@@ -252,6 +254,7 @@ namespace SatelliteTests
 
 		private void Test03()
 		{
+			// todo ???
 		}
 	}
 }

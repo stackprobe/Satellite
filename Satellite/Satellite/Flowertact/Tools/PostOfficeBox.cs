@@ -15,7 +15,7 @@ namespace Charlotte.Flowertact.Tools
 		private NamedEventObject _messagePostEvent;
 		private string _messageDir;
 
-		public PostOfficeBox(String ident)
+		public PostOfficeBox(string ident)
 		{
 			_ident = IDENT_PREFIX + SecurityTools.GetSHA512_128String(ident);
 			_mutex = new MutexObject(_ident + "_m");
@@ -69,7 +69,7 @@ namespace Charlotte.Flowertact.Tools
 
 				if (this.GMR_FirstNo != -1)
 				{
-					String file = Path.Combine(_messageDir, StringTools.ZPad(this.GMR_FirstNo, 4));
+					string file = Path.Combine(_messageDir, StringTools.ZPad(this.GMR_FirstNo, 4));
 					byte[] recvData = File.ReadAllBytes(file);
 
 					FileTools.DeleteFile(file);

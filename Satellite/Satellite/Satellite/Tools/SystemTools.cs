@@ -26,7 +26,7 @@ namespace Charlotte.Satellite.Tools
 
 		public static void Error(object obj)
 		{
-			// TODO
+			//Console.WriteLine(obj); // test test test
 		}
 
 		public static bool IsProcessAlive(int pid)

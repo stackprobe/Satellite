@@ -14,28 +14,6 @@ namespace Charlotte.Satellite.Tools
 			File.WriteAllBytes(file, new byte[0]);
 		}
 
-		public static void CreateDir_Ex(string dir)
-		{
-			for (int c = 0; c < 50; c++)
-			{
-				try
-				{
-					Directory.CreateDirectory(dir);
-
-					if (Directory.Exists(dir))
-						return;
-				}
-				catch
-				{ }
-
-				Thread.Sleep(c);
-			}
-			Directory.CreateDirectory(dir);
-
-			if (Directory.Exists(dir) == false)
-				throw new Exception("ディレクトリを作成出来ません。" + dir);
-		}
-
 		public static void CreateDir(string dir)
 		{
 			CreateDir_Ex(dir);
@@ -51,31 +29,6 @@ namespace Charlotte.Satellite.Tools
 			return Directory.Exists(dir);
 		}
 
-		private static void DeleteFile_Ex(string file)
-		{
-			if (File.Exists(file))
-			{
-				for (int c = 0; c < 50; c++)
-				{
-					try
-					{
-						File.Delete(file);
-
-						if (File.Exists(file) == false)
-							return;
-					}
-					catch
-					{ }
-
-					Thread.Sleep(c);
-				}
-				File.Delete(file);
-
-				if (File.Exists(file))
-					throw new Exception("ファイルを削除出来ません。" + file);
-			}
-		}
-
 		public static void DeleteFile(string file)
 		{
 			DeleteFile_Ex(file);
@@ -89,31 +42,6 @@ namespace Charlotte.Satellite.Tools
 			}
 			catch
 			{ }
-		}
-
-		private static void DeleteDir_Ex(string dir)
-		{
-			if (Directory.Exists(dir))
-			{
-				for (int c = 0; c < 50; c++)
-				{
-					try
-					{
-						Directory.Delete(dir, true);
-
-						if (Directory.Exists(dir) == false)
-							return;
-					}
-					catch
-					{ }
-
-					Thread.Sleep(c);
-				}
-				Directory.Delete(dir, true);
-
-				if (Directory.Exists(dir))
-					throw new Exception("ディレクトリを削除出来ません。" + dir);
-			}
 		}
 
 		public static void DeleteDir(string dir, bool recursive = false)
@@ -155,6 +83,98 @@ namespace Charlotte.Satellite.Tools
 						break;
 
 					fs.Write(block.Block, block.StartPos, block.Length);
+				}
+			}
+		}
+
+		private const int EX_TRY_MAX = 100;
+
+		public static void CreateDir_Ex(string dir)
+		{
+			if (Directory.Exists(dir) == false)
+			{
+				for (int c = 0; c < EX_TRY_MAX; c++)
+				{
+					try
+					{
+						Directory.CreateDirectory(dir);
+
+						if (Directory.Exists(dir))
+							return;
+					}
+					catch
+					{ }
+
+					Thread.Sleep(c);
+				}
+
+				{
+					Directory.CreateDirectory(dir);
+
+					if (Directory.Exists(dir))
+						return;
+
+					throw new Exception("ディレクトリを作成出来ません。" + dir);
+				}
+			}
+		}
+
+		private static void DeleteFile_Ex(string file)
+		{
+			if (File.Exists(file))
+			{
+				for (int c = 0; c < EX_TRY_MAX; c++)
+				{
+					try
+					{
+						File.Delete(file);
+
+						if (File.Exists(file) == false)
+							return;
+					}
+					catch
+					{ }
+
+					Thread.Sleep(c);
+				}
+
+				{
+					File.Delete(file);
+
+					if (File.Exists(file) == false)
+						return;
+
+					throw new Exception("ファイルを削除出来ません。" + file);
+				}
+			}
+		}
+
+		private static void DeleteDir_Ex(string dir)
+		{
+			if (Directory.Exists(dir))
+			{
+				for (int c = 0; c < EX_TRY_MAX; c++)
+				{
+					try
+					{
+						Directory.Delete(dir, true);
+
+						if (Directory.Exists(dir) == false)
+							return;
+					}
+					catch
+					{ }
+
+					Thread.Sleep(c);
+				}
+
+				{
+					Directory.Delete(dir, true);
+
+					if (Directory.Exists(dir) == false)
+						return;
+
+					throw new Exception("ディレクトリを削除出来ません。" + dir);
 				}
 			}
 		}

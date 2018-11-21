@@ -36,8 +36,8 @@ namespace Charlotte.Htt
 
 				for (int index = 0; index < count; index++)
 				{
-					String key = Encoding.ASCII.GetString((byte[])rawData.GetList()[c++]);
-					String value = Encoding.ASCII.GetString((byte[])rawData.GetList()[c++]);
+					string key = Encoding.ASCII.GetString((byte[])rawData.GetList()[c++]);
+					string value = Encoding.ASCII.GetString((byte[])rawData.GetList()[c++]);
 
 					_headerFields.Add(key, value);
 				}

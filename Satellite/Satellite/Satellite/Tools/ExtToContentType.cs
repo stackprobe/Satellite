@@ -265,12 +265,12 @@ namespace Charlotte.Satellite.Tools
 			}
 		}
 
-		public static String GetContentType(String ext)
+		public static string GetContentType(string ext)
 		{
 			return DictionaryTools.Get(Map.Values, ext, DEF_CONTENT_TYPE);
 		}
 
-		public static String GetExt(String contentType)
+		public static string GetExt(string contentType)
 		{
 			return DictionaryTools.Get(Map.Keys, contentType, DEF_EXT);
 		}

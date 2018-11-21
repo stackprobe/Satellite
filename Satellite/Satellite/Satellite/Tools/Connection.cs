@@ -31,6 +31,7 @@ namespace Charlotte.Satellite.Tools
 
 		private static MutexHandleMonitor MHM = new MutexHandleMonitor(COMMON_ID + "_MHM");
 		private bool MHM_Entered = false;
+		private bool MHM_Once = false;
 
 		public Connection(string group, string ident)
 		{
@@ -62,13 +63,16 @@ namespace Charlotte.Satellite.Tools
 					MHM.Enter();
 					MHM_Entered = true;
 
-					int ohc = MHM.GetOtherHandleCount();
+					if (MHM_Once == false)
+					{
+						MHM_Once = true;
 
-					File.AppendAllLines(@"C:\temp\1.txt", new string[] { "" + ohc }, Encoding.ASCII); // test test test
+						int ohc = MHM.GetOtherHandleCount();
 
-					if (ohc == 0)
-						if (FileTools.ExistDir(this.CommonDir))
-							FileTools.DeleteDir(this.CommonDir, true);
+						if (ohc == 0)
+							if (FileTools.ExistDir(this.CommonDir))
+								FileTools.DeleteDir(this.CommonDir, true);
+					}
 				}
 #else // old
 				if (FileTools.ExistFile(this.FirstTimeFile) == false)
@@ -162,14 +166,14 @@ namespace Charlotte.Satellite.Tools
 					this.OtherSessionDir = Path.Combine(this.OtherIdentDir, this.OtherSession);
 
 					{
-						String[] tokens = new String[]
+						string[] tokens = new string[]
 						{
 							this.Ident,
 							this.IdentDir,
 							this.Session,
 							this.SessionDir,
 						};
-						String text = string.Join("\n", tokens);
+						string text = string.Join("\n", tokens);
 						byte[] data = StringTools.ENCODING_SJIS.GetBytes(text);
 
 						string connectFile = Path.Combine(this.OtherSessionDir, "_connect");

@@ -14,11 +14,11 @@ namespace Charlotte.Htt.Response
 			: this("<html><body><h1>Happy tea time!</h1></body></html>")
 		{ }
 
-		public HttResHtml(String htmlText)
+		public HttResHtml(string htmlText)
 			: this(htmlText, Encoding.UTF8)
 		{ }
 
-		public HttResHtml(String htmlText, Encoding encoding)
+		public HttResHtml(string htmlText, Encoding encoding)
 		{
 			_htmlText = htmlText;
 			_encoding = encoding;
