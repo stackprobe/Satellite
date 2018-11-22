@@ -26,7 +26,7 @@ namespace Charlotte.Satellite.Tools
 
 		public static void Error(object obj)
 		{
-			//Console.WriteLine(obj); // test test test
+			//Console.WriteLine(obj); // XXX
 		}
 
 		public static bool IsProcessAlive(int pid)
@@ -41,7 +41,7 @@ namespace Charlotte.Satellite.Tools
 			return false;
 		}
 
-#if false // old
+#if false // old -- MoveFileEx() does not works in Windows10 ???
 		// ---- MoveFileEx ----
 
 		[Flags]
