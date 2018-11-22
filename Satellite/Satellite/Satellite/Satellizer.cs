@@ -16,8 +16,6 @@ namespace Charlotte.Satellite
 
 		public Satellizer(string group, string ident)
 		{
-			throw new NotImplementedException("Sorry, This class works improperly !!!"); // ★★★★★★★★★★★★★★★★★★★★
-
 			if (group == null)
 				throw new ArgumentNullException("group");
 
@@ -29,8 +27,6 @@ namespace Charlotte.Satellite
 
 		public static void Listen(string group, string ident, int millis, Server server)
 		{
-			throw new NotImplementedException("Sorry, This method works improperly !!!"); // ★★★★★★★★★★★★★★★★★★★★
-
 			if (group == null)
 				throw new ArgumentNullException("group");
 

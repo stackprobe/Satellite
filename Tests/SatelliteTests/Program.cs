@@ -58,7 +58,52 @@ namespace SatelliteTests
 
 		private static readonly string SELF_FILE = @"C:\Dev\Main2\Satellite\Tests\SatelliteTests\bin\Debug\SatelliteTests.exe";
 
-#if !true // mlt-proc ver
+#if true // single ver
+		private void Test01()
+		{
+			Process.Start(SELF_FILE, "/T1S");
+			Process.Start(SELF_FILE, "/T1C " + 1);
+		}
+
+		private void Test01_Client(string c)
+		{
+			using (Satellizer stllzr = new Satellizer("TEST_GROUP", "CLIENT"))
+			{
+				for (int d = 0; d < 20 * 50; d++)
+				{
+					string testData = "TEST_STRING_" + c + "_" + d;
+
+					Console.WriteLine("testData: " + testData);
+
+					while (stllzr.Connect(2000) == false)
+					{
+						Console.WriteLine("接続ナシ_リトライします。" + c);
+					}
+					stllzr.Send(testData);
+
+					for (; ; )
+					{
+						string retData = (string)stllzr.Recv(2000);
+
+						if (retData != null)
+						{
+							string assumeData = testData + "_RET";
+
+							Console.WriteLine("retData: " + retData);
+							Console.WriteLine("assumeData: " + assumeData);
+
+							if (retData != assumeData)
+								throw new Exception("想定したデータと違う。");
+
+							break;
+						}
+					}
+					stllzr.Disconnect();
+				}
+			}
+		}
+
+#elif true // mlt-proc ver
 		private void Test01()
 		{
 			Process.Start(SELF_FILE, "/T1S");

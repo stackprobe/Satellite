@@ -69,9 +69,9 @@ namespace Charlotte.Satellite.Tools
 
 						int ohc = MHM.GetOtherHandleCount();
 
-						if (ohc == 0)
-							if (FileTools.ExistDir(this.CommonDir))
-								FileTools.DeleteDir(this.CommonDir, true);
+						//if (ohc == 0)
+						//if (FileTools.ExistDir(this.CommonDir))
+						//FileTools.DeleteDir(this.CommonDir, true);
 					}
 				}
 #else // old
