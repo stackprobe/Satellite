@@ -31,7 +31,7 @@ namespace SatelliteTests
 			{
 				if (args[0] == "/T1C")
 				{
-					Test01_Client();
+					Test01_Client(args[1]);
 					return;
 				}
 				if (args[0] == "/T1S")
@@ -58,13 +58,63 @@ namespace SatelliteTests
 
 		private static readonly string SELF_FILE = @"C:\Dev\Main2\Satellite\Tests\SatelliteTests\bin\Debug\SatelliteTests.exe";
 
+#if !true // mlt-proc ver
 		private void Test01()
 		{
 			Process.Start(SELF_FILE, "/T1S");
-			Test01_Client();
+
+			for (int cc = 0; cc < 20; cc++)
+			{
+				Process.Start(SELF_FILE, "/T1C " + cc);
+			}
 		}
 
-		private void Test01_Client()
+		private void Test01_Client(string c)
+		{
+			using (Satellizer stllzr = new Satellizer("TEST_GROUP", "CLIENT"))
+			{
+				for (int d = 0; d < 50; d++)
+				{
+					string testData = "TEST_STRING_" + c + "_" + d;
+
+					Console.WriteLine("testData: " + testData);
+
+					while (stllzr.Connect(2000) == false)
+					{
+						Console.WriteLine("接続ナシ_リトライします。" + c);
+					}
+					stllzr.Send(testData);
+
+					for (; ; )
+					{
+						string retData = (string)stllzr.Recv(2000);
+
+						if (retData != null)
+						{
+							string assumeData = testData + "_RET";
+
+							Console.WriteLine("retData: " + retData);
+							Console.WriteLine("assumeData: " + assumeData);
+
+							if (retData != assumeData)
+								throw new Exception("想定したデータと違う。");
+
+							break;
+						}
+					}
+					stllzr.Disconnect();
+				}
+			}
+		}
+
+#else // mlt-th ver
+		private void Test01()
+		{
+			Process.Start(SELF_FILE, "/T1S");
+			Test01_Client(null);
+		}
+
+		private void Test01_Client(string dummy)
 		{
 			Thread[] thl = new Thread[20];
 
@@ -116,6 +166,7 @@ namespace SatelliteTests
 			for (int c = 0; c < 20; c++)
 				thl[c].Join();
 		}
+#endif
 
 		private void Test01_Server()
 		{
@@ -129,7 +180,6 @@ namespace SatelliteTests
 
 			public bool Interlude()
 			{
-				Console.WriteLine("*1");
 				lock (SYNCROOT)
 				{
 					return _c < 20 * 50;
@@ -140,7 +190,6 @@ namespace SatelliteTests
 			{
 				for (; ; )
 				{
-					Console.WriteLine("*2");
 					string retData = (string)stllzr.Recv(2000);
 
 					if (retData != null)
