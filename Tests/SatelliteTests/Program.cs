@@ -50,8 +50,8 @@ namespace SatelliteTests
 					return;
 				}
 			}
-			Test01();
-			//Test02();
+			//Test01(); // ng
+			Test02();
 			//Test02_b();
 			//Test03();
 		}
