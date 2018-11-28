@@ -241,6 +241,10 @@ namespace Charlotte.Satellite.Tools
 			"m4v", "video/mp4",
 			"mp4", "video/mp4",
 			"ogv", "video/ogg",
+
+			// 2018.11.28 追加
+
+			"json", "application/json",
 		};
 
 		public const string DEF_EXT = "bin";
@@ -267,6 +271,7 @@ namespace Charlotte.Satellite.Tools
 
 		public static string GetContentType(string ext)
 		{
+			ext = ext.Replace(".", "");
 			return DictionaryTools.Get(Map.Values, ext, DEF_CONTENT_TYPE);
 		}
 
