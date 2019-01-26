@@ -80,10 +80,13 @@ namespace EasyBBS
 
 				if (query != null)
 				{
+					if (query.StartsWith("?"))
+						query = query.Substring(1);
+
 					Dictionary<string, string> q = Utils.ParseQuery(query);
 
-					user = q["user"];
-					eMailAddress = q["e-mail"];
+					q.TryGetValue("user", out user);
+					q.TryGetValue("e-mail", out eMailAddress);
 				}
 
 				if (user == null)
