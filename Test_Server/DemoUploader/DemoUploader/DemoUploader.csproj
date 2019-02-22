@@ -8,8 +8,8 @@
     <ProjectGuid>{6779D2B6-BEC2-418A-970E-D1C0AB0F00AE}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EasyBBS</RootNamespace>
-    <AssemblyName>EasyBBS</AssemblyName>
+    <RootNamespace>DemoUploader</RootNamespace>
+    <AssemblyName>DemoUploader</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -46,10 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EasyBBSService.cs" />
+    <Compile Include="DemoUploaderService.cs" />
+    <Compile Include="MultiPartContent.cs" />
+    <Compile Include="MultiPartFormData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RemarkInfo.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>

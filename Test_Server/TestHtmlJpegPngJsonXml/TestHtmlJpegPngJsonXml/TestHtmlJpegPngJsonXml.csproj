@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Satellite">
-      <HintPath>C:\Dev\Main2\Satellite\Satellite\Satellite\bin\Release\Satellite.dll</HintPath>
+      <HintPath>..\..\..\Satellite\Satellite\bin\Release\Satellite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
