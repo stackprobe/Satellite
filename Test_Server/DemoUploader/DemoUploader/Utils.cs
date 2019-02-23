@@ -64,13 +64,39 @@ namespace DemoUploader
 			}
 		}
 
-		private static bool Contains(byte[] chrs, byte target)
+		private static bool Contains(byte[] text, byte target)
 		{
-			for (int index = 0; index < chrs.Length; index++)
-				if (chrs[index] == target)
-					return true;
+			return IndexOf(text, target) != -1;
+		}
 
-			return false;
+		private static int IndexOf(byte[] text, byte target)
+		{
+			return IndexOf(text, new byte[] { target });
+		}
+
+		public static int IndexOf(byte[] text, byte[] target, int start = 0)
+		{
+			for (int index = start; index + target.Length <= text.Length; index++)
+				if (IsSame(text, index, target, 0, target.Length))
+					return index;
+
+			return -1;
+		}
+
+		private static bool IsSame(byte[] a, int aOffset, byte[] b, int bOffset, int length)
+		{
+			for (int index = 0; index < length; index++)
+				if (a[aOffset + index] != b[bOffset + index])
+					return false;
+
+			return true;
+		}
+
+		public static byte[] GetRange(byte[] src, int offset, int length)
+		{
+			byte[] dest = new byte[length];
+			Array.Copy(src, offset, dest, 0, length);
+			return dest;
 		}
 	}
 }

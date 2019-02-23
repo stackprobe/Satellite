@@ -111,7 +111,7 @@ namespace EasyBBS
 
 			foreach (RemarkInfo remark in this.Remarks)
 			{
-				String text = Resource.HTML_REMARK;
+				string text = Resource.HTML_REMARK;
 
 				text = text.Replace("${DATE-TIME}", remark.TimeStamp.ToString());
 				text = text.Replace("${IP}", remark.IPAddress);

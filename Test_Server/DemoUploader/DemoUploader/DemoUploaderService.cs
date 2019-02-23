@@ -26,7 +26,7 @@ namespace DemoUploader
 		}
 
 		private byte[] LastUploadedFileData;
-		private String LastUploadedFile;
+		private string LastUploadedFile;
 
 		public HttResponse Service(HttRequest req)
 		{
@@ -45,21 +45,21 @@ namespace DemoUploader
 
 				string html = Resource.HTML_UPLOADED;
 
-				string htmlFileName = uploadFile.GetFileName();
+				string htmlFileName = uploadFile.FileName;
 				int i = htmlFileName.LastIndexOf('/');
 				htmlFileName = htmlFileName.Substring(i + 1);
 				i = htmlFileName.LastIndexOf('\\');
 				htmlFileName = htmlFileName.Substring(i + 1);
 				htmlFileName = Utils.EncodeUrl(htmlFileName);
 
-				html = ProcessTag(html, "_overview", innerHtml => GetOverview(innerHtml, htmlFileName, GetFileType(uploadFile.GetFileName())));
-				html = html.Replace("${FILE-NAME}", uploadFile.GetFileName());
+				html = ProcessTag(html, "_overview", innerHtml => GetOverview(innerHtml, htmlFileName, GetFileType(uploadFile.FileName)));
+				html = html.Replace("${FILE-NAME}", uploadFile.FileName);
 				html = html.Replace("${FILE-SIZE}", "" + uploadFile.Data.Length);
 				html = html.Replace("${SUPPLEMENT}", Encoding.UTF8.GetString(supplement.Data));
 				html = html.Replace("${FILE-DATA-HEX}", ToHex(uploadFile.Data));
 
 				this.LastUploadedFileData = uploadFile.Data;
-				this.LastUploadedFile = uploadFile.GetFileName();
+				this.LastUploadedFile = uploadFile.FileName;
 
 				return new HttResHtml(html);
 			}
@@ -67,36 +67,34 @@ namespace DemoUploader
 			return new HttResHtml(Resource.HTML_MAIN);
 		}
 
-		private String ProcessTag(string html, string tagName, Func<string, string> processor)
+		private string ProcessTag(string html, string tagName, Func<string, string> processor)
 		{
 			string openTag = "<" + tagName + ">";
 			string closeTag = "</" + tagName + ">";
 
-			//StringTools.Enclosed encl = StringTools.getEnclosed(html, openTag, closeTag);
-			//String innerHtml = encl.innerText;
-			string innerHtml = null; // TODO
+			Enclosed encl = new Enclosed(html, openTag, closeTag);
+			string innerHtml = encl.GetInner();
 
 			innerHtml = processor(innerHtml);
 
-			//html = html.Substring(0, encl.bgnBgn) + innerHtml + html.substring(encl.endEnd); // TODO
+			html = encl.GetLeft() + innerHtml + encl.GetRight();
 			return html;
 		}
 
-		private string GetOverview(String innerHtml, String fileName, String fileType)
+		private string GetOverview(string innerHtml, string fileName, string fileType)
 		{
-			String openTag = "<" + fileType + ">";
-			String closeTag = "</" + fileType + ">";
+			string openTag = "<" + fileType + ">";
+			string closeTag = "</" + fileType + ">";
 
-			// TODO
-			//StringTools.Enclosed encl = StringTools.getEnclosed(innerHtml, openTag, closeTag);
-			//innerHtml = encl.innerText;
+			Enclosed encl = new Enclosed(innerHtml, openTag, closeTag);
+			innerHtml = encl.GetInner();
 
-			//innerHtml = innerHtml.replace("${FILE-NAME}", fileName);
+			innerHtml = innerHtml.Replace("${FILE-NAME}", fileName);
 
 			return innerHtml;
 		}
 
-		private String GetFileType(String fileName)
+		private string GetFileType(string fileName)
 		{
 			string contentType = ExtToContentType.GetContentType(Path.GetExtension(fileName));
 

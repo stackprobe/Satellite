@@ -37,7 +37,7 @@ namespace TestHtmlJpegPngJsonXml
 
 			public HttResponse Service(HttRequest req)
 			{
-				String path = req.GetUrl().PathAndQuery;
+				string path = req.GetUrl().PathAndQuery;
 
 				if (path == "/test0001.html")
 				{
