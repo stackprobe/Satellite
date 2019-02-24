@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Charlotte.Satellite;
-using System.Diagnostics;
 using System.Threading;
+using System.Diagnostics;
+using Charlotte.Satellite;
 using Charlotte.Flowertact;
 
 namespace SatelliteTests

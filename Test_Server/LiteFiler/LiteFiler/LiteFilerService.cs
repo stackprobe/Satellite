@@ -31,7 +31,7 @@ namespace LiteFiler
 		{
 			string reqPath = Utils.DecodeUrl(req.GetUrl().AbsolutePath);
 			string[] pTkns = StringTools.Tokenize(reqPath, '/').Where(pTkn => pTkn != "").ToArray();
-			string path = string.Join("/", pTkns);
+			string path = string.Join(@"\", pTkns);
 
 			path = Path.Combine(ROOT_DIR, path);
 
