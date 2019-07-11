@@ -1,24 +1,24 @@
 Fortewave for C#
 ================
 
-�v���Z�X�ԒʐM���W���[���ł��B
-���̃��W���[���������������̃v���Z�X�ƒʐM�ł��܂��B
-�ʐM����� Java �łł�ok
+プロセス間通信モジュールです。
+このモジュールを実装した他のプロセスと通信できます。
+通信相手は Java 版でもok
 
 
-�ʐM�̌`��
+通信の形態
 ----------
 
-	���b�Z�[�W�E�L���[����
+	メッセージ・キュー方式
 
-		�ڑ��E�ؒf�͖����B
+		接続・切断は無い。
 
-	�ʐM�f�[�^�̓o�C�g�X�g���[���ł͂Ȃ��ȉ��̃I�u�W�F�N�g
+	通信データはバイトストリームではなく以下のオブジェクト
 
 		SERIALIZABLE_OBJECT:
 			byte[]
-			Charlotte.Satellite.ObjectList # �l�� SERIALIZABLE_CHILD_OBJECT �̂����ꂩ
-			Charlotte.Satellite.ObjectMap  # �l�� SERIALIZABLE_CHILD_OBJECT �̂����ꂩ, �L�[�� null �s��
+			Charlotte.Satellite.ObjectList # 値は SERIALIZABLE_CHILD_OBJECT のいずれか
+			Charlotte.Satellite.ObjectMap  # 値は SERIALIZABLE_CHILD_OBJECT のいずれか, キーは null 不可
 			string
 
 		SERIALIZABLE_CHILD_OBJECT:
@@ -26,16 +26,16 @@ Fortewave for C#
 			null
 
 
-�����
+動作環境
 --------
 
 	Windows 10
-	�m�F���Ă��܂��� Windows 7/8/8.1 �ł�������������܂���B
+	確認していませんが Windows 7/8/8.1 でも動くかもしれません。
 
 	C#
 
 
-�K�v�Ȗ��O���
+必要な名前空間
 --------------
 
 	Charlotte.Flowertact
@@ -44,32 +44,32 @@ Fortewave for C#
 	Charlotte.Satellite.Tools
 
 
-�g�ݍ��ݕ��@
+組み込み方法
 ------------
 
-	1. �u�K�v�Ȗ��O��ԁv���\�[�X�i�v���W�F�N�g�j�ɑg�ݍ���
+	1. 「必要な名前空間」をソース（プロジェクト）に組み込む
 
 
-�g�p����N���X
+使用するクラス
 --------------
 
 	Charlotte.Satellite.ObjectList
 
-		System.Collections.Generic.List<object> �����b�v�����N���X
+		System.Collections.Generic.List<object> をラップしたクラス
 
 	Charlotte.Satellite.ObjectMap
 
-		System.Collections.Generic.Dictionary<string, object> �����b�v�����N���X
+		System.Collections.Generic.Dictionary<string, object> をラップしたクラス
 
 	Charlotte.Flowertact.Fortewave
 
-		���̃��W���[���̊O���C���^�[�t�F�C�X
+		このモジュールの外部インターフェイス
 
 
-	�� Charlotte.Flowertact.Tools, Charlotte.Satellite.Tools ���O��ԓ��̃N���X�͎g�p���Ȃ��ŉ������B
+	★ Charlotte.Flowertact.Tools, Charlotte.Satellite.Tools 名前空間内のクラスは使用しないで下さい。
 
 
-�C���^�[�t�F�C�X
+インターフェイス
 ----------------
 
 	TODO
