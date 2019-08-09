@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 
 namespace Charlotte.Satellite.Tools
 {
-	public class SecurityTools
+	public static class SecurityTools
 	{
 		public static string GetSHA512_128String(string str)
 		{

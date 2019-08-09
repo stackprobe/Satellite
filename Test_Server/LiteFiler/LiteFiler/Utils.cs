@@ -7,7 +7,7 @@ using Charlotte.Satellite.Tools;
 
 namespace LiteFiler
 {
-	public class Utils
+	public static class Utils
 	{
 		public static string DecodeUrl(string str)
 		{

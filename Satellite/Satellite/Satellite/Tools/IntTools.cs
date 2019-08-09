@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte.Satellite.Tools
 {
-	public class IntTools
+	public static class IntTools
 	{
 		public static byte[] ToBytes(int value)
 		{

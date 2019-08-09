@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte.Satellite.Tools
 {
-	public class StringTools
+	public static class StringTools
 	{
 		public const string HEXADECIMAL = "0123456789ABCDEF";
 		public const string hexadecimal = "0123456789abcdef";

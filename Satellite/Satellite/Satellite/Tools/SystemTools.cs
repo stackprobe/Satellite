@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace Charlotte.Satellite.Tools
 {
-	public class SystemTools
+	public static class SystemTools
 	{
 		public static string GetTmp()
 		{

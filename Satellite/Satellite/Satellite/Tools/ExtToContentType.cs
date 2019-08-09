@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte.Satellite.Tools
 {
-	public class ExtToContentType
+	public static class ExtToContentType
 	{
 		private static readonly string[] _rawData = new string[]
 		{

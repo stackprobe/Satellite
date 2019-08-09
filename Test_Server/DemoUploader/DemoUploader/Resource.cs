@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DemoUploader
 {
-	public class Resource
+	public static class Resource
 	{
 		public const string HTML_MAIN = @"
 <html>

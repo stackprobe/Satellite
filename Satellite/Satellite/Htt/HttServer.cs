@@ -9,7 +9,7 @@ using System.IO;
 
 namespace Charlotte.Htt
 {
-	public class HttServer
+	public static class HttServer
 	{
 		private const string COMMON_ID = "{7da01163-efa3-4941-a5a6-be0800720d8e}"; // shared_uuid@g
 		private const string EXCL_ID = COMMON_ID + "_e";

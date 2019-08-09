@@ -6,7 +6,7 @@ using System.IO;
 
 namespace EasyBBS
 {
-	public class Utils
+	public static class Utils
 	{
 		public static string CutTrail(string str, int maxlen)
 		{
