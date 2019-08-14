@@ -30,7 +30,6 @@ Fortewave for C#
 --------
 
 	Windows 10
-	確認していませんが Windows 7/8/8.1 でも動くかもしれません。
 
 	C#
 
