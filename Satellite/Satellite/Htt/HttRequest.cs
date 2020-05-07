@@ -99,6 +99,11 @@ namespace Charlotte.Htt
 			return File.ReadAllBytes(_bodyPartFile);
 		}
 
+		public long GetBodyPartLength()
+		{
+			return new FileInfo(_bodyPartFile).Length;
+		}
+
 		public void Pulse()
 		{
 			_pipeline.Pulse();

@@ -72,5 +72,10 @@ namespace LiteFiler
 
 			return false;
 		}
+
+		public static void WriteLog(object message)
+		{
+			Console.WriteLine("[" + DateTime.Now + "] " + message);
+		}
 	}
 }

@@ -29,6 +29,8 @@ namespace EasyBBS
 		{
 			if (req.GetUrl().AbsolutePath == "/remark")
 			{
+				Utils.WriteLog("REMARK");
+
 				byte[] body = req.GetBodyPart();
 				string sBody = Encoding.ASCII.GetString(body);
 				Dictionary<string, string> q = Utils.ParseQuery(sBody);
@@ -73,6 +75,8 @@ namespace EasyBBS
 			}
 			else
 			{
+				Utils.WriteLog("GET-PAGE");
+
 				string user = null;
 				string eMailAddress = null;
 

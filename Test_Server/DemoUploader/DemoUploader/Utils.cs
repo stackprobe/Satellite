@@ -98,5 +98,10 @@ namespace DemoUploader
 			Array.Copy(src, offset, dest, 0, length);
 			return dest;
 		}
+
+		public static void WriteLog(object message)
+		{
+			Console.WriteLine("[" + DateTime.Now + "] " + message);
+		}
 	}
 }

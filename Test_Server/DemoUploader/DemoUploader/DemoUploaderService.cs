@@ -30,6 +30,10 @@ namespace DemoUploader
 
 		public HttResponse Service(HttRequest req)
 		{
+			Utils.WriteLog(req.GetMethod());
+			Utils.WriteLog(req.GetUrlString());
+			Utils.WriteLog(req.GetBodyPartLength());
+
 			if (req.GetUrl().AbsolutePath.StartsWith("/uploaded-file/"))
 				return new HttResFileImage(this.LastUploadedFileData, this.LastUploadedFile);
 

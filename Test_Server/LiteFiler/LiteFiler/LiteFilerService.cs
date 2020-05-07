@@ -35,6 +35,8 @@ namespace LiteFiler
 
 			path = Path.Combine(ROOT_DIR, path);
 
+			Utils.WriteLog("閲覧パス ==> " + path);
+
 			if (File.Exists(path))
 				return new HttResFile(path);
 
