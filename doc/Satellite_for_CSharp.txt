@@ -36,7 +36,7 @@ Satellite for C#
 動作環境
 --------
 
-	Windows 10
+	Windows 10 (Pro | Home)
 
 	C#
 
