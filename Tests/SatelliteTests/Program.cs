@@ -348,7 +348,7 @@ namespace SatelliteTests
 
 		private void Test03()
 		{
-			// todo ???
+			// HACK ???
 		}
 	}
 }
