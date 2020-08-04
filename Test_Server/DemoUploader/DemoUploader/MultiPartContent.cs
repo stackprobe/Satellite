@@ -18,7 +18,7 @@ namespace DemoUploader
 			if (index == -1)
 				throw new Exception();
 
-			// HACK This code is inadequate
+			// HACK: This code is inadequate
 
 			string line = Encoding.UTF8.GetString(Utils.GetRange(body, 0, index)); // maybe Content-Disposition:
 
