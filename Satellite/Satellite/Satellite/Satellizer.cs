@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading;
 using Charlotte.Satellite.Tools;
 
+#pragma warning disable 162 // 到達できないコードが検出されました。
+
 namespace Charlotte.Satellite
 {
 	public class Satellizer : IDisposable
@@ -16,7 +18,7 @@ namespace Charlotte.Satellite
 
 		public Satellizer(string group, string ident)
 		{
-			throw new NotImplementedException("Sorry, This class works improperly !!!"); // ★★★★★★★★★★★★★★★★★★★★
+			throw new NotImplementedException("Sorry, This class works improperly !!!"); // NOTE: 使わないので放置
 
 			if (group == null)
 				throw new ArgumentNullException("group");
@@ -29,7 +31,7 @@ namespace Charlotte.Satellite
 
 		public static void Listen(string group, string ident, int millis, Server server)
 		{
-			throw new NotImplementedException("Sorry, This method works improperly !!!"); // ★★★★★★★★★★★★★★★★★★★★
+			throw new NotImplementedException("Sorry, This method works improperly !!!"); // NOTE: 使わないので放置
 
 			if (group == null)
 				throw new ArgumentNullException("group");
